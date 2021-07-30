@@ -10,7 +10,7 @@ a=0 #startvärde
 b=1 #slutvärde
 
 x=array(linspace(a,b,n+2)) # vårt intervall mellan a och b, n+2 punkter
-x1=array(linspace(0,1,100))# xaxel med tätare xvärden för att testa funktionen
+x1=array(linspace(a,b,1e4))# xaxel med tätare xvärden för att testa funktionen
 
 
 def testf(x): #definera en testfunktion
@@ -30,6 +30,14 @@ Pcoeff= linalg.inv(X)@(F) #Löser linjära ekvationsystemet. Får ut koefficient
 
 
 p=Polynomial(Pcoeff[:-1]) #Polynomial skapar ett polynom objekt med värdena i Pcoeff förutom sista värdet 'h'.
+
+
+L = [(abs(p(i)-testf(i))) for i in x1]
+max_value = max(L)
+my = x1[L.index(max_value)]
+
+
+
 figure(0)
 plot(x1,p(x1))
 plot(x1,testf(x1))
@@ -45,13 +53,8 @@ z=optimize.newton(f2,1)
 print(f'root = {z}')
 print(f'f2(z) = {f2(z)}')
 #Alternativt istället enbart hitta maximum, eftersom det står i uppgiften att det inte behövs optimeras.
-my=max((abs(p(x1)-testf(x1))))
 
 
-print(f'h={abs(Pcoeff[-1])}')
-print(p)
-print(f'my={my}')
-max((abs(p(x)-testf(x))))
 
 #Steg 1
 #List comprehension. Mina punkter x0,x1,x2,x3 i testintervallet (a,b)
