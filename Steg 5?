@@ -1,15 +1,10 @@
-from  numpy import *
-from  matplotlib.pyplot import *
-from numpy.polynomial import Polynomial
-from scipy import optimize
-
 n = 2 #graden på polynomet
 a = 0 #startvärde
 b = 1 #slutvärde
 
 x=linspace(a,b,n+2) # vårt intervall mellan a och b, n+2 punkter
 x1=linspace(0,1,100)# xaxel med tätare xvärden för att testa funktionen
-X = zeros((n+2,n+2))
+
 
 def testf(x): #definera en testfunktion
     return exp(x)
@@ -24,22 +19,23 @@ def reorder(x):
         return x
 
 def createPolynom():
+    X = zeros((n+2,n+2))
     for i in range(n+2):
         for j in range(n+1):
             X[i][j]=x[i]**j
     for i in range(n+2):
         X[i][-1]=(-1)**i
-    F = testf(x) 
+    F = testf(x)
+    global Pcoeff
     Pcoeff = linalg.inv(X)@(F)
     p = Polynomial(Pcoeff[:-1])
     return p
 
-createPolynom()
+p = createPolynom()
 
-#Steg 4
-tol = 1.e-6
+tol = 1.e-3
 while abs(Pcoeff[-1]) > tol:
-    createPolynom()
+    p = createPolynom()
     L = [(abs(p(i)-testf(i))) for i in x1]
     max_value = max(L)
     my_Index = L.index(max_value)
@@ -68,4 +64,4 @@ while abs(Pcoeff[-1]) > tol:
         if sign(testf(my) - p(my)) == sign(testf(x[SaveIndex - 1]) - p(x[SaveIndex - 1])):
             x[SaveIndex - 1] = my
         else:
-            x[SaveIndex + 1] = my
+            x[SaveIndex] = my
