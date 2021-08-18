@@ -125,7 +125,6 @@ else:
     else:
         x[x_i+1] = my
 
-t=linspace(a,10,int(1e4))
 figure(0)
 plot(t,p(t)) #Plottar f och p i samma graf som jämförelse
 plot(t,f(t))
