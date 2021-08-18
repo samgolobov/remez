@@ -73,7 +73,6 @@ class RemezApprox:
         figure(0)
         plot(t,self.p(t))
         plot(t,self.func(t))
-        show()
     def plotError(self):
         x=self.x
         t=self.t
