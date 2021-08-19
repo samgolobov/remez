@@ -44,7 +44,8 @@ class RemezApprox:
 
         t=linspace(a,b,int(1e4))
         self.t=t
-
+        
+        f = self.func
         p = self.__createPolynom(x)
 
         counter=0
